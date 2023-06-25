@@ -19,7 +19,7 @@ public class LogRepositoryImpl implements LogRepository {
 
     @Override
     public List<String> allComponents() {
-        List<String> components = Arrays.asList("bie-user-boot", "intranet-isv-boot", "bie-authorizarion-boot");
+        List<String> components = Arrays.asList("test-user-boot", "test-intranet-boot", "test-authorization-boot");
         return components;
     }
 
