@@ -1,0 +1,83 @@
+<mat-toolbar>
+    <img src="assets/img/logo.png" style="height: 45px;">
+    <span>Log Viewer</span>
+    <span class="example-spacer"></span>
+    <mat-form-field appearance="outline" class="select-with-custom">
+        <mat-select [formControl]="components" multiple placeholder="Todos los componentes">
+            <mat-select-trigger>
+                {{components.value?.[0] || ''}}
+                <span *ngIf="(components.value?.length || 0) > 1" class="example-additional-selection">
+                    (+{{(components.value?.length || 0) - 1}} {{components.value?.length === 2 ? 'otro': 'otros'}})
+                </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let topping of componentList" [value]="topping">{{topping}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button mat-stroked-button color="primary" style="margin-left: 10px;" (click)="onSyncLogs()">
+        <mat-icon>sync</mat-icon>
+        Sincronizar
+    </button>
+</mat-toolbar>
+
+<div class="main">
+    <div class="container" fxLayout="row" fxLayoutAlign="start center">
+        <mat-form-field appearance="outline" class="trace-element">
+            <input matInput placeholder="TraceId" style="font-size: 13px;" [(ngModel)]="traceId">
+            <button *ngIf="traceId" matSuffix mat-icon-button aria-label="Clear" (click)="traceId=''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="example-spacer">
+            <input matInput placeholder="Search for logs" style="font-size: 13px;" [(ngModel)]="message">
+            <button *ngIf="message" matSuffix mat-icon-button aria-label="Clear" (click)="message=''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="onFilterLogs()">Query
+            logs</button>
+    </div>
+</div>
+
+<section class="example-container" tabindex="0">
+    <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="timestamp">
+            <th mat-header-cell *matHeaderCellDef> timestamp </th>
+            <td mat-cell *matCellDef="let element">
+                <span class="span-table">{{element.timestamp | date:'dd/MM/yyyy h:mm a'}} </span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="entityName">
+            <th mat-header-cell *matHeaderCellDef> container </th>
+            <td mat-cell *matCellDef="let element">
+                <span class="span-table">{{element.entityName}} </span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="traceId">
+            <th mat-header-cell *matHeaderCellDef> traceId </th>
+            <td mat-cell *matCellDef="let element">
+                <span class="span-table">{{element.traceId}} </span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="errorMessage">
+            <th mat-header-cell *matHeaderCellDef> error.message </th>
+            <td mat-cell *matCellDef="let element">
+                <span class="span-table text-error-message"> {{element.errorMessage}} </span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="message">
+            <th mat-header-cell *matHeaderCellDef> message </th>
+            <td mat-cell *matCellDef="let element" (click)="openModal(element)">
+                <span class="span-table text-message">{{element.message}} </span>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            [ngClass]="{'class-error': row.logLevel === 'ERROR'}"></tr>
+    </table>
+</section>

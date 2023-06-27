@@ -1,0 +1,15 @@
+.log-stream {
+  height: 97.6vh;
+  padding: 12px;
+  font-family: monospace;
+  background-color: #0F171C;
+  color: #dadada;
+  text-align: justify;
+  overflow-y: auto; 
+  word-wrap: break-word;
+
+  span {
+    display: block; 
+    margin-left: 6px;
+  }
+}

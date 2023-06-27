@@ -1,0 +1,77 @@
+.trace-element {
+  flex: 1 1 200px;
+  max-width: 200px;
+  margin-right: 10px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.main {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  margin-bottom: 10px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.example-container {
+  height: calc(100vh - 125px);
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.select-with-custom {
+  width: 300px !important;
+}
+
+.text-message {
+  display: inline-block;
+  vertical-align: middle;
+  width: 650px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text-error-message {
+  display: inline-block;
+  vertical-align: middle;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.span-table {
+  font-size: 13px;
+}
+
+.mat-mdc-table .mdc-data-table__row {
+  height: 30px !important;
+}
+
+.class-error {
+  background-color: #ea8f8f;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+  height: 38px !important;
+}
+
+::ng-deep .mat-mdc-form-field-flex {
+  margin-top: -8px !important;
+}
