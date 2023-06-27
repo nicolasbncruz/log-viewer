@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,6 +40,7 @@ public class LogRepositoryImpl implements LogRepository {
                             && excludes.stream().noneMatch(exclude -> log.getMessage().contains(exclude))))
                     .collect(Collectors.toList());
         }
+        logModels.sort(Comparator.comparing(LogModel::getTimestamp));
         return logModels.stream().map(LogMapper.INSTANCE::map).collect(Collectors.toList());
     }
 
