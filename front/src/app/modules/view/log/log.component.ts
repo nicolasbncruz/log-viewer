@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { DetailComponent } from '../detail/detail.component';
-import { FormControl } from '@angular/forms';
-import { ViewService } from '../services/view.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {DetailComponent} from '../detail/detail.component';
+import {FormControl} from '@angular/forms';
+import {ViewService} from '../services/view.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -12,6 +12,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./log.component.scss'],
 })
 export class LogComponent implements OnInit {
+
+  @ViewChild('scrollContainer', {static: false}) private scrollContainer!: ElementRef;
 
   components = new FormControl('');
   componentList: string[] = [];
@@ -26,11 +28,16 @@ export class LogComponent implements OnInit {
     private matSnackBar: MatSnackBar,
     private dialog: MatDialog,
     private service: ViewService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.onLoadComponents();
     this.onFilterLogs();
+  }
+
+  scrollToBottom(): void {
+    this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
   }
 
   openModal(data: string): void {
@@ -68,7 +75,12 @@ export class LogComponent implements OnInit {
     this.service.filterLogs(this.traceId, this.message).subscribe({
       next: response => this.dataSource = response,
       error: err => console.error(err),
-      complete: () => this.onMessage('Listado de logs completado')
+      complete: () => {
+        setTimeout(() => {
+          this.onMessage('Listado de logs completado');
+          this.scrollToBottom();
+        }, 2000);
+      }
     });
   }
 
@@ -76,7 +88,7 @@ export class LogComponent implements OnInit {
     this.matSnackBar.open(
       textMessage,
       'Cerrar',
-      { duration: 3000, verticalPosition: 'bottom', horizontalPosition: 'center' }
+      {duration: 3000, verticalPosition: 'bottom', horizontalPosition: 'center'}
     );
   }
 

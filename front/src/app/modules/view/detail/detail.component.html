@@ -1,7 +1,7 @@
 <div class="log-stream">
     <span class="margin-left">{{ log.logLevel}}</span>
     <span class="margin-left">Container: {{ log.entityName}}</span>
-    <span class="margin-left">Timestamp: {{ log.timestamp}}</span>
+    <span class="margin-left">Timestamp: {{ log.timestamp | date:'dd/MM/yyyy HH:mm:ss'}}</span>
     <span class="margin-left">TraceId: {{ log.traceId}}</span>
     <span class="margin-left">SpanId: {{ log.spanId}}</span>
     <span class="margin-left">LoggerName: {{ log.loggerName}}</span>
@@ -10,7 +10,7 @@
     <br *ngIf="!!log.errorMessage">
     <span class="margin-left" *ngIf="!!log.errorMessage">ErrorMessage: {{ log.errorMessage}}</span>
     <br *ngIf="!!log.errorStack">
-    <span class="margin-left" style="font-size: 13px;" *ngIf="!!log.errorStack"
+    <span class="margin-left" style="font-size: 12px;" *ngIf="!!log.errorStack"
         [innerHTML]="formatErrorStack(log.errorStack)"></span>
     <br>
     <span class="margin-left" style="font-size: 12.5px;" [innerHTML]="formatMessage(log.message)"></span>
