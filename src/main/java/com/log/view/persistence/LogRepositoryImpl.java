@@ -36,7 +36,7 @@ public class LogRepositoryImpl implements LogRepository {
             logModels = logModels.stream()
                     .filter(log -> traceId.trim().isEmpty() || log.getTraceId().equals(traceId.trim()))
                     .filter(log -> message.isEmpty()
-                            || (filters.stream().anyMatch(filter -> log.getMessage().contains(filter))
+                            || (filters.stream().allMatch(filter -> log.getMessage().contains(filter))
                             && excludes.stream().noneMatch(exclude -> log.getMessage().contains(exclude))))
                     .collect(Collectors.toList());
         }

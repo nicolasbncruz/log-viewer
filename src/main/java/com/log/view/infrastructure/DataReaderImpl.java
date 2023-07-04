@@ -116,18 +116,13 @@ public class DataReaderImpl implements DataReader {
 
     private void createLogsFolder() {
         File folder = new File(folderPath);
-
         if (!folder.exists()) {
-
             boolean created = folder.mkdirs();
-
             if (created) {
                 log.info("Carpeta 'logs' creada correctamente.");
             } else {
                 log.error("No se pudo crear la carpeta 'logs'.");
             }
-        } else {
-            log.info("La carpeta 'logs' ya existe.");
         }
     }
 }
