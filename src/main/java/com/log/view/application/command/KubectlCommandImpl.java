@@ -37,11 +37,11 @@ public class KubectlCommandImpl implements KubectlCommand {
         try {
             ProcessBuilder processBuilder = new ProcessBuilder();
             processBuilder.command("cmd.exe", "/c", command);
-
             Process process = processBuilder.start();
-
             int exitCode = process.waitFor();
-            log.info("Comando ejecutado. Codigo de salida: {}", exitCode);
+            if (exitCode != 0) {
+                log.info("Comando ejecutado. Codigo de salida: {}", exitCode);
+            }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }

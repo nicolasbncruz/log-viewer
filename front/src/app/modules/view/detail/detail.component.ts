@@ -20,10 +20,10 @@ export class DetailComponent {
   }
 
   formatErrorStack(error: string): SafeHtml {
-    return this.sanitizer.bypassSecurityTrustHtml('ErrorStack: ' + error.replaceAll('at ', '<br>at '));
+    return this.sanitizer.bypassSecurityTrustHtml('ErrorStack: ' + error.replaceAll('at ', '<br>at&nbsp;'));
   }
 
   formatMessage(message: string): SafeHtml {
-    return this.sanitizer.bypassSecurityTrustHtml('Message: <br>' + message.replaceAll('at ', '<br>at '));
+    return this.sanitizer.bypassSecurityTrustHtml('Message: <br>' + message.replaceAll('at ', '<br>at&nbsp;'));
   }
 }

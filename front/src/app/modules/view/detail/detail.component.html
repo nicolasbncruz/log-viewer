@@ -1,17 +1,16 @@
 <div class="log-stream">
-    <span class="margin-left">{{ log.logLevel}}</span>
-    <span class="margin-left">Container: {{ log.entityName}}</span>
-    <span class="margin-left">Timestamp: {{ log.timestamp | date:'dd/MM/yyyy HH:mm:ss'}}</span>
-    <span class="margin-left">TraceId: {{ log.traceId}}</span>
-    <span class="margin-left">SpanId: {{ log.spanId}}</span>
-    <span class="margin-left">LoggerName: {{ log.loggerName}}</span>
+    <span>{{ log.logLevel}}</span>
+    <span>Container: {{ log.entityName}}</span>
+    <span>Timestamp: {{ log.timestamp | date:'dd/MM/yyyy HH:mm:ss'}}</span>
+    <span>TraceId: {{ log.traceId}}</span>
+    <span>SpanId: {{ log.spanId}}</span>
+    <span>LoggerName: {{ log.loggerName}}</span>
     <br *ngIf="!!log.errorClass">
-    <span class="margin-left" *ngIf="!!log.errorClass">ErrorClass: {{ log.errorClass}}</span>
+    <span *ngIf="!!log.errorClass">ErrorClass: {{ log.errorClass}}</span>
     <br *ngIf="!!log.errorMessage">
-    <span class="margin-left" *ngIf="!!log.errorMessage">ErrorMessage: {{ log.errorMessage}}</span>
+    <span *ngIf="!!log.errorMessage">ErrorMessage: {{ log.errorMessage}}</span>
     <br *ngIf="!!log.errorStack">
-    <span class="margin-left" style="font-size: 12px;" *ngIf="!!log.errorStack"
-        [innerHTML]="formatErrorStack(log.errorStack)"></span>
+    <span *ngIf="!!log.errorStack" [innerHTML]="formatErrorStack(log.errorStack)"></span>
     <br>
-    <span class="margin-left" style="font-size: 12.5px;" [innerHTML]="formatMessage(log.message)"></span>
+    <span [innerHTML]="formatMessage(log.message)"></span>
 </div>
