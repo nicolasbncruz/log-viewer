@@ -8,10 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -81,7 +78,7 @@ public class DataReaderImpl implements DataReader {
         List<LogModel> logModels = new ArrayList<>();
 
         ObjectMapper mapper = new ObjectMapper();
-        try (BufferedReader br = new BufferedReader(new FileReader(jsonFile))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(jsonFile), "UTF-8"))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 try {

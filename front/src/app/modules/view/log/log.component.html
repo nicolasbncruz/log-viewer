@@ -6,11 +6,12 @@
         <mat-select [formControl]="components" multiple placeholder="Todos los componentes">
             <mat-select-trigger>
                 {{components.value?.[0] || ''}}
-                <span *ngIf="(components.value?.length || 0) > 1" class="example-additional-selection">
+                <span *ngIf="(components.value?.length || 0) > 1" class="component-selection">
                     (+{{(components.value?.length || 0) - 1}} {{components.value?.length === 2 ? 'otro': 'otros'}})
                 </span>
             </mat-select-trigger>
-            <mat-option *ngFor="let topping of componentList" [value]="topping">{{topping}}</mat-option>
+            <mat-option *ngFor="let topping of componentList" [value]="topping"
+                class="component-selection">{{topping}}</mat-option>
         </mat-select>
     </mat-form-field>
     <button mat-stroked-button color="primary" style="margin-left: 10px;" (click)="onSyncLogs()">
@@ -38,7 +39,7 @@
     </div>
 </div>
 
-<section class="example-container" tabindex="0"  #scrollContainer>
+<section class="example-container" tabindex="0" #scrollContainer>
     <table mat-table [dataSource]="dataSource">
 
         <ng-container matColumnDef="timestamp">
@@ -64,7 +65,7 @@
 
         <ng-container matColumnDef="errorMessage">
             <th mat-header-cell *matHeaderCellDef> error.message </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" [matTooltip]="element.errorMessage">
                 <span class="span-table text-error-message"> {{element.errorMessage}} </span>
             </td>
         </ng-container>

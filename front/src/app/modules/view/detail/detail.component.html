@@ -12,5 +12,10 @@
     <br *ngIf="!!log.errorStack">
     <span *ngIf="!!log.errorStack" [innerHTML]="formatErrorStack(log.errorStack)"></span>
     <br>
+    <div style="display: flex; align-items: flex-start;">
+        <span>Message:&nbsp;</span>
+        <a style="color: green; margin-right: 10px;font-size: 12px;" href="#"
+            (click)="copyToClipboard($event, log.message)">Copy</a>
+    </div>
     <span [innerHTML]="formatMessage(log.message)"></span>
 </div>
