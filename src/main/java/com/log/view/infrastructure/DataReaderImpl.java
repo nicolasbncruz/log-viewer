@@ -85,16 +85,16 @@ public class DataReaderImpl implements DataReader {
                     JsonNode logNode = mapper.readTree(linea);
 
                     LogModel logModel = LogModel.builder()
-                            .message(logNode.has("message") ? logNode.get("message").asText() : "")
-                            .timestamp(logNode.has("timestamp") ? logNode.get("timestamp").asLong() : 0)
-                            .logLevel(logNode.has("log.level") ? logNode.get("log.level").asText() : "")
-                            .loggerName(logNode.has("logger.name") ? logNode.get("logger.name").asText() : "")
-                            .traceId(logNode.has("traceId") ? logNode.get("traceId").asText() : "")
-                            .spanId(logNode.has("spanId") ? logNode.get("spanId").asText() : "")
-                            .entityName(logNode.has("entity.name") ? logNode.get("entity.name").asText() : "")
-                            .errorClass(logNode.has("error.class") ? logNode.get("error.class").asText() : "")
-                            .errorMessage(logNode.has("error.message") ? logNode.get("error.message").asText() : "")
-                            .errorStack(logNode.has("error.stack") ? logNode.get("error.stack").asText() : "")
+                            .message(getJsonNodeValue(logNode, "message"))
+                            .timestamp(getJsonNodeValueAsLong(logNode, "timestamp"))
+                            .logLevel(getJsonNodeValue(logNode, "log.level"))
+                            .loggerName(getJsonNodeValue(logNode, "logger.name"))
+                            .traceId(getJsonNodeValue(logNode, "traceId"))
+                            .spanId(getJsonNodeValue(logNode, "spanId"))
+                            .entityName(getJsonNodeValue(logNode, "entity.name"))
+                            .errorClass(getJsonNodeValue(logNode, "error.class"))
+                            .errorMessage(getJsonNodeValue(logNode, "error.message"))
+                            .errorStack(getJsonNodeValue(logNode, "error.stack"))
                             .build();
 
                     if (!logModel.getTraceId().isEmpty()) {
@@ -109,6 +109,14 @@ public class DataReaderImpl implements DataReader {
         }
 
         return logModels;
+    }
+
+    private String getJsonNodeValue(JsonNode node, String fieldName) {
+        return node.has(fieldName) ? node.get(fieldName).asText() : "";
+    }
+
+    private Long getJsonNodeValueAsLong(JsonNode node, String fieldName) {
+        return node.has(fieldName) ? node.get(fieldName).asLong() : 0L;
     }
 
     private void createLogsFolder() {
