@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -30,7 +31,25 @@ public class KubectlCommandImpl implements KubectlCommand {
 
     @Override
     public void logComponentsExecute(List<String> components) {
-        components.forEach(component -> executeCommand(logComponentsCommand + component + " > " + folderPath + "/" + component + ".json"));
+        long startTime = System.currentTimeMillis();
+        List<Thread> threads = new ArrayList<>();
+        components.forEach(component -> {
+            Thread thread = new Thread(() -> executeCommand(logComponentsCommand + component + " > " + folderPath + "/" + component + ".json"));
+            threads.add(thread);
+            thread.start();
+        });
+
+        threads.forEach(thread -> {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        threads.clear();
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime;
+        log.info("Sincronizacion completado: {} milisegundos", duration);
     }
 
     private void executeCommand(String command) {

@@ -41,6 +41,7 @@ public class DataReaderImpl implements DataReader {
         try {
             return Files.lines(Path.of(deploymentFileName))
                     .skip(1)
+                    .filter(line -> line.split("\\s+")[3].trim().equals("1"))
                     .map(line -> line.split("\\s+")[0].trim())
                     .collect(Collectors.toList());
         } catch (IOException e) {
